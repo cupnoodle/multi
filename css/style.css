@@ -1,0 +1,40 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200);
+* {margin: 0; padding: 0; outline: 0;}
+
+html{
+  height: 100%;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  background-color: #252427;
+  color: #EEE;
+  font-size: 16px;
+}
+
+.stage{
+  background-color: #A2A2A2;
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.char
+{
+  width: 50px;
+  height: 50px;
+  background-image: url('../sonic/right/0.png');
+  position: absolute;
+  bottom: 0px;
+  left: 100px;
+}
+
+.name
+{
+  font-size: 10px;
+  position: relative;
+  top: 55px;
+}
