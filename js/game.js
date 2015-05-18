@@ -3,13 +3,16 @@ var keyispressed = false;
 var facing = "right";
 
 $(document).ready(function(){
+  var stagelength = parseInt($(".stage").css("width"));
   var chardiv = $("div[charid='1']");
   var distance_from_left = parseInt(chardiv.css("left"));
   var distance_from_right = parseInt(chardiv.css("right"));
 
-  $( "html" ).keydown(function(key){
+  $(document).keydown(function(key){
     distance_from_left = parseInt(chardiv.css("left"));
-    distance_from_right = parseInt(chardiv.css("right"));
+    distance_from_right = stagelength - distance_from_left - 80;
+    console.log("key pressed: "+ key.which);
+    console.log("stage width: " + stagelength);
     //move right
     if(key.which == 39)
     {
@@ -21,6 +24,9 @@ $(document).ready(function(){
         $("div[charid='1']").attr("velocity", velocity);
       }
       chardiv.animate({left: "+="+velocity} , 2);
+
+      console.log("distance from left : " + distance_from_left);
+      console.log("distance from right : " + distance_from_right);
     }
 
     //move left
@@ -38,10 +44,12 @@ $(document).ready(function(){
       console.log("distance from left : " + distance_from_left);
       console.log("distance from right : " + distance_from_right);
     }
+
+    key.preventDefault()
   });
 
   //key is released
-  $("html").keyup(function(key){
+  $(document).keyup(function(key){
     //move right or move left
     if(key.which == 39 || key.which == 37)
     {
