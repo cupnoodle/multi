@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Multiplayer demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script>
+      var socket = io();
+
+      function sendPlayerInfo(pid){
+        var posFromLeft = parseInt($('.char[you="1"]').css("left"));
+        var facing = $('.char[you="1"]').attr("facing");
+        var velocity = parseInt($('.char[you="1"]').attr("velocity"));
+        var display_name = $('#displayname').val();
+        socket.emit('player_info', pid, posFromLeft, facing, velocity, display_name);
+      }
+
+      $(document).ready(function(){
+        socket.emit('chat message', 'yes'); 
+        $('#displayname').keyup(function(){
+          $("div[you='1'] u").html($('#displayname').val());
+        });
+      });
+
+
+      socket.on('player_id', function(pid){
+        $('.char[you="1"]').attr("charid" , pid);
+        setInterval(function(){ sendPlayerInfo(pid)}, 70);
+      });
+
+      socket.on('other_players', function(pid, posFromLeft, facing, velocity, display_name){
+        //check if the character id exist or not
+        //if not exist then create ,else modify it
+        if(!$('.char[charid="'+ pid +'"]').length)
+        {
+          $('.stage').append('<div class="char" charid="'+ pid +'" velocity="'+ velocity +'" facing="'+ facing +'"><div class="name">'+ display_name +'</div></div>');
+        }
+
+        $('.char[charid="'+ pid +'"]').css("left", posFromLeft);
+
+        if(velocity > 0)
+        {
+          $('.char[charid="'+ pid +'"]').css("background-image", "url('sonic/runright.gif')");
+        }
+        else if(velocity < 0)
+        {
+          $('.char[charid="'+ pid +'"]').css("background-image", "url('sonic/runleft.gif')");
+        }
+        else
+        {
+          $('.char[charid="'+ pid +'"]').css("background-image", "url('sonic/"+ facing +"/0.png')");
+        }
+
+        if($('.char[charid="'+ pid +'"] > .name').html() != display_name)
+        {
+          $('.char[charid="'+ pid +'"] > .name').html(display_name);
+        }
+      });
+
+      socket.on('disconnect_player', function(pid){
+        //if the player exist
+        if($('.char[charid="'+ pid +'"]').length)
+        {
+          $('.char[charid="'+ pid +'"]').fadeOut(500, function(){ $(this).remove(); });
+        }
+      });
+
+
+    </script>
+  </head>
+  <body>
+      <div class="stage">
+      <div class="char" charid="1" you="1" velocity="0" facing="right"><div class="name"><u>you</u></div></div>
+    </div>
+    <br><br>
+    <div class="log">
+      <div class="form-inline" style="width:300px; padding-left: 10px;">
+          <input type="text" class="form-control" id="displayname" placeholder="Display name">
+      </div>
+      <br><br>
+      <p>&nbsp;&nbsp; Press left and right arrow key to move</p>
+    </div>
+  </body>
+</html>

@@ -30,6 +30,7 @@ body {
   position: absolute;
   bottom: 0px;
   left: 100px;
+  z-index: 2;
 }
 
 .name
@@ -37,4 +38,5 @@ body {
   font-size: 10px;
   position: relative;
   top: 55px;
+  text-align: center;
 }

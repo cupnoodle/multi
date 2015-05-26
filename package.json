@@ -1,0 +1,10 @@
+{
+  "name": "multiplayer-example",
+  "version": "0.0.1",
+  "description": "Multiplater using socket io",
+  "dependencies": {
+    "express": "^4.10.2",
+    "shortid": "^2.2.2",
+    "socket.io": "^1.3.5"
+  }
+}
