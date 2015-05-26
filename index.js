@@ -33,7 +33,11 @@ io.on('connection', function(socket){
   });
 });
 
+/* for local development
 http.listen(3000, function(){
   console.log('listening on *:3000');
-});
+});*/
+
+//for heroku
+var port_number = server.listen(process.env.PORT || 3000);
 
