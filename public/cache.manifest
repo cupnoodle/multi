@@ -1,0 +1,10 @@
+CACHE MANIFEST
+
+NETWORK:
+*
+
+CACHE:
+sonic/left/0.png
+sonic/right/0.png
+sonic/runleft.gif
+sonic/runright.gif

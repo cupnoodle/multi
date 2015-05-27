@@ -9,7 +9,16 @@ var shortid = require('shortid');
 var this_user_id;
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
 
+app.get('/cache.manifest', function(req, res){
+  res.header("Content-Type", "text/cache-manifest");
+  res.sendFile(__dirname + '/public/cache.manifest');
+  console.log('cache in use');
+});
+
 app.use(express.static(__dirname + '/public'));
+
+
+
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
@@ -33,11 +42,7 @@ io.on('connection', function(socket){
   });
 });
 
-/* for local development
 http.listen(3000, function(){
   console.log('listening on *:3000');
-});*/
-
-//for heroku
-var port_number = server.listen(process.env.PORT || 3000);
+});
 
