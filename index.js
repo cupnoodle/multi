@@ -42,6 +42,8 @@ io.on('connection', function(socket){
   });
 });
 
+//substitute manual port number with process.env.PORT as heroku will auto assign random port, I guess
+//spent 2 days on figuring out how to deploy on heroku, "application error" keep popping out, damn Orz
 http.listen(process.env.PORT, function(){
   console.log('listening on *:' + process.env.PORT);
 });
